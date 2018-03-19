@@ -87,10 +87,18 @@ logging.debug(values_uptoN_list)
 logging.debug('The values after M blank insertion list is')
 logging.debug(values_afterM_list)
 
-# insert blank rows
+# create new spreadsheet to store values
+
+nwb = openpyxl.Workbook()
+
+# write the values from values_uptoN_list
+
+# write the values from values_afterM_list
+# ensure you add blank rows M after finishing values_uptoN_list
+
 
 
 # save the final sheet
 
-# wb.save('multiplicationTable.xlsx')
+# nwb.save('alteredSheet.xlsx')
 # logging.debug('Spreadsheet file saved.')
