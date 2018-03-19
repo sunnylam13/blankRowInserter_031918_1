@@ -20,15 +20,16 @@ logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - 
 # parse the command line
 
 position_row_N = sys.argv[1]
+position_row_N = 3 # for testing
 logging.debug('The row where we start insertion is:  %s' % (position_row_N))
 
 blank_row_num_M = sys.argv[2]
+blank_row_num_M = 2 # for testing
 logging.debug('The number of blank rows to insert is:  %s' % (blank_row_num_M))
 
 sheet_to_process = sys.argv[3]
-logging.debug('The spreadsheet to process is:  %s' % (sheet_to_process))
-
 sheet_to_process = "../tests/updatedProduceSales.xlsx" # set it for testing purposes, disable in final product
+logging.debug('The spreadsheet to process is:  %s' % (sheet_to_process))
 
 # access the workbook
 
