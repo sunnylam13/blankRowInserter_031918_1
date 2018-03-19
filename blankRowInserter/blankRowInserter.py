@@ -56,11 +56,17 @@ for rowValue in range(1,upper_row_max+1): # +1 because we're not starting at 0
 	# within this specific rowValue we go through each colValue
 	for colValue in range(1,upper_col_max+1): # +1 because we're not starting at 0
 		# convert the colValue into a letter coordinate
+		column_letter = get_column_letter(colValue)
 		# combine the column coordinate and row coordinate
 		# get the cell coordinate's value and push it into the values_list
-		pass
+		cell_value = sheet[column_letter + str(rowValue)].value
+		values_list.append(cell_value)
+		logging.debug('The value for %s has been stored in the values_list' % (column_letter + str(rowValue)))
+		logging.debug('The value for %s' % (column_letter + str(rowValue)) )
+		logging.debug(cell_value)
 
-
+logging.debug('The values list is')
+logging.debug(values_list)
 
 # save the final sheet
 
