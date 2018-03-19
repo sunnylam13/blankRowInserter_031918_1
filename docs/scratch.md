@@ -16,3 +16,14 @@ then it adds *M* blank rows
 
 then it copies the remaining lines of the spreadsheet...
 
+test data
+
+	file:///Users/sunnyair/Dropbox/python_projects/blankRowInserter_031918_1/tests/updatedProduceSales.xlsx
+
+	tests/updatedProduceSales.xlsx
+
+	../tests/updatedProduceSales.xlsx # assuming you're leaving the folder of blankRowInserter.py
+
+for testing
+
+	python3 blankRowInserter.py 3 2 ../tests/updatedProduceSales.xlsx
