@@ -48,6 +48,20 @@ logging.debug('The maximum number of rows in the sheet is %i' % (upper_row_max))
 upper_col_max = sheet.max_column
 logging.debug('The maximum number of columns in the sheet is %i' % (upper_col_max))
 
+# copy all of the data up to the N row and its cells, insertion of M happens after N
+
+values_list = [] # to store the values from the spreadsheet
+
+for rowValue in range(1,upper_row_max+1): # +1 because we're not starting at 0
+	# within this specific rowValue we go through each colValue
+	for colValue in range(1,upper_col_max+1): # +1 because we're not starting at 0
+		# convert the colValue into a letter coordinate
+		# combine the column coordinate and row coordinate
+		# get the cell coordinate's value and push it into the values_list
+		pass
+
+
+
 # save the final sheet
 
 # wb.save('multiplicationTable.xlsx')

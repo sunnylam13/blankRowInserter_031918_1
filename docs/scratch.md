@@ -1,5 +1,11 @@
 # Scratch Notes and Log
 
+## Monday, March 19, 2018 12:48 PM
+
+We have a for loop to go through each row...
+
+Then we have a for loop within that row to go through each column...
+
 ## Monday, March 19, 2018 11:31 AM
 
 The 2 integers, one is *N* and the other *M*...
@@ -27,3 +33,4 @@ test data
 for testing
 
 	python3 blankRowInserter.py 3 2 ../tests/updatedProduceSales.xlsx
+
