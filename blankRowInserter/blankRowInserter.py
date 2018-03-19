@@ -39,6 +39,14 @@ logging.debug('Testing to see that sheet loaded right, giving a value:  ')
 logging.debug(sheet['A2'])
 logging.debug(sheet['A2'].value)
 
+# find out the max rows and max columns so we can set upper ends for loops
+
+upper_row_max = sheet.max_row
+logging.debug('The maximum number of rows in the sheet is %i' % (upper_row_max))
+
+upper_col_max = sheet.max_column
+logging.debug('The maximum number of columns in the sheet is %i' % (upper_col_max))
+
 # save the final sheet
 
 # wb.save('multiplicationTable.xlsx')
