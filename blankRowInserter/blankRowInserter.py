@@ -74,13 +74,13 @@ def row_analyzer(values_list,min_value,max_value):
 # store values up to N row
 row_analyzer(values_uptoN_list,1,position_row_N + 1)
 
-# store values after the number of M blank rows
+# store values after the number of M blank rows is inserted
 # this runs to the end of the remaining rows hence upper_row_max + 1 is the upper limit
-# row_analyzer(values_afterM_list,int(position_row_N) + 1 + int(blank_row_num_M),upper_row_max + 1)
 
-row_analyzer(values_afterM_list,position_row_N + blank_row_num_M + 1,upper_row_max + 1)
+row_analyzer(values_afterM_list,position_row_N + 2,upper_row_max + 1) # we use +2 to be the row after the one we want to insert the gaps after, we're not inserting the gaps yet, we're simply splitting the data up and storing it in 2 separate lists i.e. one before N and one for after N
 
 
+# for testing
 logging.debug('The values up to N list is')
 logging.debug(values_uptoN_list)
 
