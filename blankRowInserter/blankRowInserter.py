@@ -15,7 +15,7 @@ except ImportError:
 
 import logging
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
-# logging.disable(logging.CRITICAL)
+logging.disable(logging.CRITICAL)
 
 # parse the command line
 
@@ -50,34 +50,10 @@ logging.debug('The maximum number of columns in the sheet is %i' % (upper_col_ma
 
 # copy all of the data up to the N row and its cells, insertion of M happens after N
 
-values_uptoN_list = [] # to store the values from the spreadsheet
-values_afterM_list = [] # to store the values from the spreadsheet, after M blank lines inserted
+value_uptoN_dict = {} # to store the values from the spreadsheet
+values_afterM_dict = {} # to store the values from the spreadsheet, after M blank lines inserted
 
-value_uptoN_dict = {}
-values_afterM_dict = {}
 
-# list version
-# def row_analyzer(values_list,min_value,max_value):
-	
-# 	for rowValue in range(min_value,max_value): # +1 because we're not starting at 0
-# 		# do not set the upper limit to upper_row_max+1 as normal, instead set it to n + 1 as we will be inserting the gap at that point
-# 		# we still add + 1 because range() stops 1 point before position_row_N normally, we want it to stop exactly at position_row_N
-		
-# 		# within this specific rowValue we go through each colValue
-# 		for colValue in range(1,upper_col_max+1): # +1 because we're not starting at 0
-# 			# convert the colValue into a letter coordinate
-# 			column_letter = get_column_letter(colValue)
-# 			# combine the column coordinate and row coordinate
-# 			cell_coordinate = column_letter + str(rowValue)
-# 			# get the cell coordinate's value and push it into the values_list
-# 			cell_value = sheet[cell_coordinate].value
-			
-# 			values_list.append(cell_value)
-# 			# logging.debug('The value for %s has been stored in the values_list' % (cell_coordinate))
-# 			# logging.debug('The value for %s' % (cell_coordinate) )
-# 			# logging.debug(cell_value)
-
-# dict version
 def row_analyzer(values_dict,min_value,max_value,blank_rows_insert=0):
 	
 	for rowValue in range(min_value,max_value): # +1 because we're not starting at 0
@@ -92,53 +68,16 @@ def row_analyzer(values_dict,min_value,max_value,blank_rows_insert=0):
 			cell_coordinate = column_letter + str(rowValue + blank_rows_insert)
 			# get the cell coordinate's value and push it into the values_list
 			cell_value = sheet[cell_coordinate].value
-			
-			# values_list.append(cell_value)
-			# logging.debug('The value for %s has been stored in the values_list' % (cell_coordinate))
-			# logging.debug('The value for %s' % (cell_coordinate) )
-			# logging.debug(cell_value)
 
 			values_dict[cell_coordinate] = cell_value
 			# logging.debug('The value for %s has been stored in the values_dict' % (cell_coordinate))
 			# logging.debug('The value for %s' % (cell_coordinate) )
 			# logging.debug(cell_value)
 
-# def row_builder(values_list,min_value,max_value,worksheet):
-	
-# 	for rowValue in range(min_value,max_value): # +1 because we're not starting at 0
-# 		# do not set the upper limit to upper_row_max+1 as normal, instead set it to n + 1 as we will be inserting the gap at that point
-# 		# we still add + 1 because range() stops 1 point before position_row_N normally, we want it to stop exactly at position_row_N
-		
-# 		# within this specific rowValue we go through each colValue
-# 		for colValue in range(1,upper_col_max+1): # +1 because we're not starting at 0
-# 			# convert the colValue into a letter coordinate
-# 			column_letter = get_column_letter(colValue)
-# 			# combine the column coordinate and row coordinate
-# 			cell_coordinate = column_letter + str(rowValue) # a string
-# 			# go to the `values_list` and set the value of the cell to that value
-# 			worksheet[cell_coordinate] = values_list[colValue]
-
-
-# 			# # get the cell coordinate's value and push it into the values_list
-# 			# cell_value = sheet[column_letter + str(rowValue)].value
-
-# 			# values_list.append(cell_value)
-# 			# # logging.debug('The value for %s has been stored in the values_list' % (column_letter + str(rowValue)))
-# 			# # logging.debug('The value for %s' % (column_letter + str(rowValue)) )
-# 			# # logging.debug(cell_value)
 
 def row_builder(values_dict,workbook):
 
 	sheet = workbook.active
-
-	# for key,value in values_dict:
-	# 	print(key)
-	
-	# for key,value in values_dict:
-	# 	logging.debug('The key value to use is:  %s' % (key))
-	# 	logging.debug('The value of the key is:  ')
-	# 	logging.debug(value)
-	# 	sheet[key] = value
 
 	# for testing
 	# for k,v in values_dict.items():
@@ -152,27 +91,19 @@ def row_builder(values_dict,workbook):
 		sheet[k] = v
 
 # store values up to N row
-# row_analyzer(values_uptoN_list,1,position_row_N + 1)
 
 row_analyzer(value_uptoN_dict,1,position_row_N + 1)
 
 # store values after the number of M blank rows is inserted
 # this runs to the end of the remaining rows hence upper_row_max + 1 is the upper limit
 
-# row_analyzer(values_afterM_list,position_row_N + 2,upper_row_max + 1) # we use +2 to be the row after the one we want to insert the gaps after, we're not inserting the gaps yet, we're simply splitting the data up and storing it in 2 separate lists i.e. one before N and one for after N
-
 row_analyzer(values_afterM_dict,position_row_N + 2,upper_row_max + 1,blank_row_num_M) # we use +2 to be the row after the one we want to insert the gaps after, we're not inserting the gaps yet, we're simply splitting the data up and storing it in 2 separate lists i.e. one before N and one for after N
 
 
 # for testing
+
 # logging.debug('The values up to N list is')
-# logging.debug(values_uptoN_list)
-
-# logging.debug('The values after M blank insertion list is')
-# logging.debug(values_afterM_list)
-
-logging.debug('The values up to N list is')
-logging.debug(value_uptoN_dict)
+# logging.debug(value_uptoN_dict)
 
 # logging.debug('The values after M blank insertion list is')
 # logging.debug(values_afterM_dict)
@@ -180,8 +111,6 @@ logging.debug(value_uptoN_dict)
 # create new spreadsheet to store values
 
 nwb = openpyxl.Workbook()
-# nsheet = nwb.active
-
 
 # write the values from values_uptoN_list
 
