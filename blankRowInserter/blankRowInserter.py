@@ -53,7 +53,10 @@ logging.debug('The maximum number of columns in the sheet is %i' % (upper_col_ma
 values_uptoN_list = [] # to store the values from the spreadsheet
 values_afterM_list = [] # to store the values from the spreadsheet, after M blank lines inserted
 
-def row_analyzer(values_list,min_value,max_value):
+value_uptoN_dict = {}
+values_afterM_dict = {}
+
+def row_analyzer(values_dict,min_value,max_value):
 	
 	for rowValue in range(min_value,max_value): # +1 because we're not starting at 0
 		# do not set the upper limit to upper_row_max+1 as normal, instead set it to n + 1 as we will be inserting the gap at that point
@@ -64,34 +67,75 @@ def row_analyzer(values_list,min_value,max_value):
 			# convert the colValue into a letter coordinate
 			column_letter = get_column_letter(colValue)
 			# combine the column coordinate and row coordinate
+			cell_coordinate = column_letter + str(rowValue)
 			# get the cell coordinate's value and push it into the values_list
-			cell_value = sheet[column_letter + str(rowValue)].value
-			values_list.append(cell_value)
+			cell_value = sheet[cell_coordinate].value
+			
+			# values_list.append(cell_value)
 			# logging.debug('The value for %s has been stored in the values_list' % (column_letter + str(rowValue)))
 			# logging.debug('The value for %s' % (column_letter + str(rowValue)) )
 			# logging.debug(cell_value)
 
+			value_uptoN_dict[rowValue] = cell_value
+
+def row_builder(values_list,min_value,max_value,worksheet):
+	
+	for rowValue in range(min_value,max_value): # +1 because we're not starting at 0
+		# do not set the upper limit to upper_row_max+1 as normal, instead set it to n + 1 as we will be inserting the gap at that point
+		# we still add + 1 because range() stops 1 point before position_row_N normally, we want it to stop exactly at position_row_N
+		
+		# within this specific rowValue we go through each colValue
+		for colValue in range(1,upper_col_max+1): # +1 because we're not starting at 0
+			# convert the colValue into a letter coordinate
+			column_letter = get_column_letter(colValue)
+			# combine the column coordinate and row coordinate
+			cell_coordinate = column_letter + str(rowValue) # a string
+			# go to the `values_list` and set the value of the cell to that value
+			worksheet[cell_coordinate] = values_list[colValue]
+
+
+			# # get the cell coordinate's value and push it into the values_list
+			# cell_value = sheet[column_letter + str(rowValue)].value
+
+			# values_list.append(cell_value)
+			# # logging.debug('The value for %s has been stored in the values_list' % (column_letter + str(rowValue)))
+			# # logging.debug('The value for %s' % (column_letter + str(rowValue)) )
+			# # logging.debug(cell_value)
+
 # store values up to N row
-row_analyzer(values_uptoN_list,1,position_row_N + 1)
+# row_analyzer(values_uptoN_list,1,position_row_N + 1)
+
+row_analyzer(value_uptoN_dict,1,position_row_N + 1)
 
 # store values after the number of M blank rows is inserted
 # this runs to the end of the remaining rows hence upper_row_max + 1 is the upper limit
 
-row_analyzer(values_afterM_list,position_row_N + 2,upper_row_max + 1) # we use +2 to be the row after the one we want to insert the gaps after, we're not inserting the gaps yet, we're simply splitting the data up and storing it in 2 separate lists i.e. one before N and one for after N
+# row_analyzer(values_afterM_list,position_row_N + 2,upper_row_max + 1) # we use +2 to be the row after the one we want to insert the gaps after, we're not inserting the gaps yet, we're simply splitting the data up and storing it in 2 separate lists i.e. one before N and one for after N
+
+row_analyzer(values_afterM_dict,position_row_N + 2,upper_row_max + 1) # we use +2 to be the row after the one we want to insert the gaps after, we're not inserting the gaps yet, we're simply splitting the data up and storing it in 2 separate lists i.e. one before N and one for after N
 
 
 # for testing
+# logging.debug('The values up to N list is')
+# logging.debug(values_uptoN_list)
+
+# logging.debug('The values after M blank insertion list is')
+# logging.debug(values_afterM_list)
+
 logging.debug('The values up to N list is')
-logging.debug(values_uptoN_list)
+logging.debug(value_uptoN_dict)
 
 logging.debug('The values after M blank insertion list is')
-logging.debug(values_afterM_list)
+logging.debug(values_afterM_dict)
 
 # create new spreadsheet to store values
 
 nwb = openpyxl.Workbook()
+nsheet = nwb.active
 
 # write the values from values_uptoN_list
+
+
 
 # write the values from values_afterM_list
 # ensure you add blank rows M after finishing values_uptoN_list
