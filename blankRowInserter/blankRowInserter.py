@@ -56,9 +56,7 @@ values_afterM_dict = {} # to store the values from the spreadsheet, after M blan
 
 def row_analyzer(values_dict,min_value,max_value,blank_rows_insert=0):
 	
-	for rowValue in range(min_value,max_value): # +1 because we're not starting at 0
-		# do not set the upper limit to upper_row_max+1 as normal, instead set it to n + 1 as we will be inserting the gap at that point
-		# we still add + 1 because range() stops 1 point before position_row_N normally, we want it to stop exactly at position_row_N
+	for rowValue in range(min_value,max_value): 
 		
 		# within this specific rowValue we go through each colValue
 		for colValue in range(1,upper_col_max+1): # +1 because we're not starting at 0
@@ -91,6 +89,9 @@ def row_builder(values_dict,workbook):
 		sheet[k] = v
 
 # store values up to N row
+# +1 because we're not starting at 0
+# do not set the upper limit to upper_row_max+1 as normal, instead set it to n + 1 as we will be inserting the gap at that point
+# we still add + 1 because range() stops 1 point before position_row_N normally, we want it to stop exactly at position_row_N
 
 row_analyzer(value_uptoN_dict,1,position_row_N + 1)
 
